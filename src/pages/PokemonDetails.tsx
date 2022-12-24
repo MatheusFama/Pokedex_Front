@@ -268,7 +268,7 @@ export const PokemonDetails = () => {
         </Description>
       </Details>
       <Evolutions>
-        <h2>Evoluções</h2>
+        <h2>Evolutions</h2>
         <EvolutionLevel levels={treeLevels ?? []} />
       </Evolutions>
     </Wrapper>
