@@ -29,7 +29,7 @@ Pré-requisitos: npm / yarn
 git clone https://github.com/MatheusFama/Pokedex_Front.git
 
 # entrar na pasta do projeto front end web
-cd pokedex-front
+cd pokedex_front
 
 # instalar dependências
 npm install
