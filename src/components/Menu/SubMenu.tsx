@@ -25,21 +25,6 @@ const SidebarLabel = styled.span`
   margin-left: 16px;
 `
 
-const DropdownLink = styled(Link)`
-  background: #252831;
-  height: 60px;
-  padding-left: 3rem;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #f5f5f5;
-  font-size: 18px;
-
-  &:hover {
-    background: green;
-    cursor: pointer;
-  }
-`
 export const SubMenu = ({ item }: { item: MItem }) => {
   const [subnav, setSubnav] = useState(false)
   const showSubnav = () => setSubnav(!subnav)
