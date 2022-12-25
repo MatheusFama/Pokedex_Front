@@ -3,7 +3,7 @@
 
 
 # Sobre o projeto
---endereço de hospedagem do site
+https://pokedexfront.netlify.app/
 
 Pokedex é uma aplicação front end web construída com intuito de aprendizagem/manuseio da biblioteca React utilizando dados da API PokeAPI(https://pokeapi.co/)
 
