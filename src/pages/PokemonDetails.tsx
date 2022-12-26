@@ -86,6 +86,8 @@ const Evolutions = styled.div`
   background: #424242
     url(https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png);
   align-content: center;
+  width: 100%;
+  min-width: 1000px;
 `
 
 const PokemonImageStatus = styled.div`

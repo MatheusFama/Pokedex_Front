@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { IEvolutionTreeItems } from '../../models/Pokemons/IEvolution'
 
@@ -48,6 +49,18 @@ export const EvolutionTreeItems = ({
   items: IEvolutionTreeItems[]
   isLastLevel: Boolean
 }) => {
+
+  const navigate = useNavigate()
+
+  const onClick = (id: number) => {
+    navigate(`/pokemon/details/${id}`, {
+      state: {
+        id: id,
+      },
+    })
+  }
+
+
   return items.length > 1 ? (
     <LisItem>
       {items.map((item, index) => (
@@ -55,7 +68,7 @@ export const EvolutionTreeItems = ({
           <Card
             isFirstLevel={isLastLevel}
             key={index}
-            href={`/pokemon/details/${item.id}`}
+            onClick={() => onClick(item.id)}
           >
             <img src={item.default_image} alt="pokemon" />
             <h3>{item.name}</h3>
