@@ -22,7 +22,7 @@ const Table = styled.ul`
 const Column = styled.li`
   width: 12.95%;
   display: inline-block;
-  padding: 1%;
+  padding-right: 1%;
 `
 
 const ColumnData = styled.ul`
@@ -72,8 +72,8 @@ const Title = styled.h3`
 export const StatusChart = ({ status }: { status: Status[] }) => {
   return (
     <Panel>
-      <Table>
         <Title>Stats</Title>
+      <Table>
         <Column>
           <ColumnData key={'hp'}>
             {Array.from(Array(COLUMN_HEIGHT).keys()).map((index) => (

@@ -6,12 +6,13 @@ import { useEffect, useRef, useState } from 'react'
 const Wrapper = styled.section`
   border-radius: 24px;
   background: #fff;
-  width: 30%;
+  width: 100%;
   border: 5px solid #fff;
   position: relative;
 `
 const Form = styled.form`
-  display: block;
+  display: flex;
+  position: relative;
 `
 const TextBox = styled.input`
   position: relative;
@@ -37,13 +38,15 @@ const Span = styled.span`
   margin-top: 0.325em;
   margin-right: 1px;
   background-color: #fff;
+  width: 90%;
 `
 const SearchButton = styled.button`
-  float: right;
   background: #fff;
   border: none;
   height: 100%;
   border-radius: 24px;
+  position: absolute;
+  right: 0;
 `
 const DataResult = styled.div`
   max-height: 300px;

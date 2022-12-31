@@ -14,6 +14,10 @@ const Item = styled.li`
 const Card = styled.a<{ isFirstLevel: Boolean }>`
   text-decoration: none;
   position: relative;
+  &:hover{
+    cursor: pointer;
+  }
+
   img {
     min-width: 130px;
     box-shadow: 0 4px 4px 0px #212121;
@@ -78,7 +82,7 @@ export const EvolutionTreeItems = ({
     </LisItem>
   ) : (
     <>
-      <Card isFirstLevel={isLastLevel} href={`/pokemon/details/${items[0].id}`}>
+      <Card isFirstLevel={isLastLevel}onClick={() => onClick(items[0].id)}>
         <img src={items[0].default_image} alt="pokemon" />
         <h3>{items[0].name}</h3>
       </Card>

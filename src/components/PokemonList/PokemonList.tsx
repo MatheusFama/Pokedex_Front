@@ -12,6 +12,7 @@ const List = styled.ul`
   flex-wrap: wrap;
   list-style-type: none;
   align-items: center;
+  justify-content: center;
 `
 
 export const PokemonList = (props: Props) => {

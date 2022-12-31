@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   background: #fff;
   background-image: url(${BackgroundImage});
+  padding: 40px;
 `
 
 const ButtonFoward = styled(IoIcons.IoIosArrowForward)`
@@ -50,17 +51,30 @@ const ButtonBackFoward = styled(IoIcons.IoIosArrowBack)`
     transform: scale(3.5);
   }
 `
-const Title = styled.img`
+
+const TitleWrapper = styled.div`
+  max-width: 450px;
   margin-left: auto;
   margin-right: auto;
-  transform: scale(0.5);
 `
+
+const Title = styled.img`
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain;
+`
+
 
 const WrapperBar = styled.div`
   justify-content: center;
   display: flex;
-  justify-content: center;
+  margin: 40px 0;
+  min-width: 300px ;
+  max-width: 30%;
+  margin-left: auto;
+  margin-right: auto;
 `
+
 export const Items = () => {
   const [items, setItems] = useState<IItem[]>([])
   const [previosPage, setPreviosPage] = useState<number>(0)
@@ -115,7 +129,9 @@ export const Items = () => {
   return (
     <Wrapper>
       <IconContext.Provider value={{ color: 'black' }}>
-        <Title src={ItemsTitle} alt="Title" />
+        <TitleWrapper>
+          <Title src={ItemsTitle} alt="Title" />
+        </TitleWrapper>
         <WrapperBar>
           <SearchBar handleSearch={handleSearchSubmit} searchData={names} />
         </WrapperBar>

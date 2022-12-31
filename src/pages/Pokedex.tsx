@@ -17,45 +17,57 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   background: #fff;
   background-image: url(${BackgroundImage});
+  padding: 40px 0;
 `
 const ButtonFoward = styled(IoIcons.IoIosArrowForward)`
-  float: right;
-  position: absolute;
-  left: 98%;
-  top: 80%;
   border: none;
   background: none;
   cursor: pointer;
-  margin-right: 10px;
   transform: scale(2);
   :hover {
     transform: scale(3.5);
   }
 `
 const ButtonBackFoward = styled(IoIcons.IoIosArrowBack)`
-  float: right;
-  position: absolute;
-  left: 0%;
-  top: 80%;
   border: none;
   background: none;
   cursor: pointer;
-  margin-right: 10px;
   transform: scale(2);
   :hover {
     transform: scale(3.5);
   }
 `
-const Title = styled.img`
+
+const TitleWrapper = styled.div`
+  max-width: 450px;
   margin-left: auto;
   margin-right: auto;
-  transform: scale(0.5);
-  position: relative;
+`
+
+const Title = styled.img`
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain;
 `
 const WrapperBar = styled.div`
   justify-content: center;
   display: flex;
-  justify-content: center;
+  margin: 40px 0;
+  min-width: 300px ;
+  max-width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+`
+
+const ListWrapper =styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+`
+
+const ButtonWrapper =styled.div`
+  position: relative;
+  height: 100%;
 `
 
 export const Pokedex = () => {
@@ -114,17 +126,25 @@ export const Pokedex = () => {
   return (
     <Wrapper>
       <IconContext.Provider value={{ color: 'black' }}>
-        <Title src={PokemonTitle} alt="Title" />
+        <TitleWrapper>
+          <Title src={PokemonTitle} alt="Title" />
+        </TitleWrapper>
         <WrapperBar>
           <SearchBar handleSearch={handleSearchSubmit} searchData={names} />
         </WrapperBar>
-        <ButtonFoward onClick={next} />
-        <ButtonBackFoward onClick={previous} />
-        <PokemonList>
-          {pokemons.map((item) => (
-            <PokemonItem key={item.id} pokemon={item} />
-          ))}
-        </PokemonList>
+        <ListWrapper>
+          <ButtonWrapper>
+            <ButtonBackFoward onClick={previous} />
+          </ButtonWrapper>
+          <PokemonList>
+            {pokemons.map((item) => (
+              <PokemonItem key={item.id} pokemon={item} />
+            ))}
+          </PokemonList>
+          <ButtonWrapper>
+            <ButtonFoward onClick={next} />
+          </ButtonWrapper>
+        </ListWrapper>
       </IconContext.Provider>
     </Wrapper>
   )
