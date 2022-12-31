@@ -43,7 +43,7 @@ const Data = styled.li<{ index: number; power: number }>`
   min-height: 1ch;
   margin-bottom: 10px;
   align-items: center;
-  animation: ${({ index, power }) => (index <= power ? animation  : '')} ${({ index })=>( index > MIN_ANIMATION_TIME ? `${MIN_ANIMATION_TIME}s`: `${index}s`)};
+  animation: ${({ index, power }) => (index <= power ? animation : '')} ${({ index }) => index > MIN_ANIMATION_TIME ? `${MIN_ANIMATION_TIME}s` : `${index}s`};
 
   ::before {
     background: blue;
@@ -72,7 +72,7 @@ const Title = styled.h3`
 export const StatusChart = ({ status }: { status: Status[] }) => {
   return (
     <Panel>
-        <Title>Stats</Title>
+      <Title>Stats</Title>
       <Table>
         <Column>
           <ColumnData key={'hp'}>

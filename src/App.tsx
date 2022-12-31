@@ -17,7 +17,7 @@ function App() {
       <Gstyle />
       <Routes>
         <Route path="/" element={<Home></Home>} />
-        <Route path="/pokedex" element={<Pokedex></Pokedex>} />
+        <Route path="/pokedex" element={<Pokedex />} />
         <Route path="/pokemon/details/:id" element={<PokemonDetails />} />
         <Route path="/item" element={<Items></Items>} />
         <Route path="/item/details/:id" element={<ItemDetails />} />

@@ -1,8 +1,9 @@
 # Pokedex
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/MatheusFama/Pokedex_Front/blob/master/LICENSE) 
 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/MatheusFama/Pokedex_Front/blob/master/LICENSE)
 
 # Sobre o projeto
+
 https://pokedexfront.netlify.app/
 
 Pokedex é uma aplicação front end web construída com intuito de aprendizagem/manuseio da biblioteca React utilizando dados da API PokeAPI(https://pokeapi.co/)
@@ -10,19 +11,19 @@ Pokedex é uma aplicação front end web construída com intuito de aprendizagem
 A aplicação consiste em apresentar informações básicas de pokemons e itens da franquia.
 
 ## Layout
+
 ![Web 1](https://github.com/MatheusFama/ASSETS/blob/main/PokemonList.PNG)
 
 ![Web 2](https://github.com/MatheusFama/ASSETS/blob/main/PokemonDetails.PNG)
 
-
 # Tecnologias utilizadas
-- HTML / CSS / JS / TypeScript
-- React JS 
 
+- HTML / CSS / JS / TypeScript
+- React JS
 
 # Como executar o projeto
-Pré-requisitos: npm / yarn
 
+Pré-requisitos: npm / yarn
 
 ```bash
 # clonar repositório
@@ -41,4 +42,3 @@ npm start
 # Autor
 
 Matheus Fama
-

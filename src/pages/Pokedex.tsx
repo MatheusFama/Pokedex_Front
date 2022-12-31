@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PokemonService from '../services/pokemon.api'
 import { PokemonList } from '../components/PokemonList/PokemonList'
 import { IPokemon } from '../models/Pokemons/IPokemon'
 import { PokemonItem } from '../components/PokemonList/PokemonItem'
 import styled from 'styled-components'
 import { IconContext } from 'react-icons/lib'
-import * as IoIcons from 'react-icons/io'
 import BackgroundImage from '../assets/container_bg.png'
 import PokemonTitle from '../assets/pokemonListTitle.png'
 import { SearchBar } from '../components/SearchBar/SearchBar'
@@ -19,24 +18,6 @@ const Wrapper = styled.div`
   background-image: url(${BackgroundImage});
   padding: 40px 0;
 `
-const ButtonFoward = styled(IoIcons.IoIosArrowForward)`
-  border: none;
-  background: none;
-  cursor: pointer;
-  transform: scale(2);
-  :hover {
-    transform: scale(3.5);
-  }
-`
-const ButtonBackFoward = styled(IoIcons.IoIosArrowBack)`
-  border: none;
-  background: none;
-  cursor: pointer;
-  transform: scale(2);
-  :hover {
-    transform: scale(3.5);
-  }
-`
 
 const TitleWrapper = styled.div`
   max-width: 450px;
@@ -45,73 +26,93 @@ const TitleWrapper = styled.div`
 `
 
 const Title = styled.img`
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 `
+
 const WrapperBar = styled.div`
   justify-content: center;
   display: flex;
   margin: 40px 0;
-  min-width: 300px ;
+  min-width: 300px;
   max-width: 30%;
   margin-left: auto;
   margin-right: auto;
 `
 
-const ListWrapper =styled.div`
+const ListWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 5px;
 `
 
-const ButtonWrapper =styled.div`
-  position: relative;
-  height: 100%;
+const Sentinel = styled.div`
+  min-height: 10px;
+  background: transparent;
 `
+
+const LIMIT_POKEMON_NUMBER = Number(process.env.REACT_APP_LIMIT_POKEMON)
 
 export const Pokedex = () => {
   const [pokemons, setPokemons] = useState<IPokemon[]>([])
-  const [previosPage, setPreviosPage] = useState<number>(0)
-  const [actualPage, setActualPage] = useState<number>(0)
-  const [nextPage, setNextPage] = useState<number>(20)
+  const [actualPage, setActualPage] = useState<number>(-LIMIT_POKEMON_NUMBER)
   const [names, setNames] = useState<ISearchData[]>([])
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true)
+  const [enableInfiniteScroll, setEnableInfiniteScroll] =
+    useState<boolean>(true)
+  const sentinel = useRef<HTMLDivElement | null>(null)
+
+  //Set Pokemons
+  useEffect(() => {
+    setPokemon(actualPage)
+  }, [actualPage])
+
+  //Observer
+  useEffect(() => {
+    const intersectObserver = new IntersectionObserver((elements) => {
+      if (elements[0].isIntersecting && hasNextPage && enableInfiniteScroll) {
+        setActualPage((previousPage) => previousPage + LIMIT_POKEMON_NUMBER)
+      }
+    })
+
+    if (sentinel?.current) intersectObserver.observe(sentinel?.current)
+
+    return () => intersectObserver.disconnect()
+  }, [hasNextPage, enableInfiniteScroll])
 
   const setPokemon = (page: number) => {
+    if (actualPage < 0) return
+
     PokemonService.getAllPokemons(page)
       .then((response) => {
-        setPokemons(response.results)
-        setNextPage(response.nextPage)
-        setPreviosPage(response.previousPage)
+        setPokemons((previousPokemons) => [
+          ...previousPokemons,
+          ...response.results,
+        ])
+        setHasNextPage(response.nextPage ? true : false)
       })
       .catch((erro) => {
         console.log(erro)
       })
   }
 
+  //SearchBox Data
   useEffect(() => {
-    setPokemon(actualPage)
     PokemonService.getAllPokemonNames()
       .then((response) => {
         setNames(response)
       })
       .catch((error) => console.log(error))
-  }, [actualPage])
-
-  const next = () => {
-    const next = nextPage
-    setActualPage(next)
-  }
-
-  const previous = () => {
-    const previous = previosPage
-    setActualPage(previous)
-  }
+  }, [])
 
   const handleSearchSubmit = (searchValue: string) => {
     if (searchValue === '') {
+      setPokemons([])
       setPokemon(0)
+      setEnableInfiniteScroll(true)
     } else {
+      setEnableInfiniteScroll(false)
       PokemonService.getPokemonByName(searchValue)
         .then((response) => {
           setPokemons([response])
@@ -133,18 +134,13 @@ export const Pokedex = () => {
           <SearchBar handleSearch={handleSearchSubmit} searchData={names} />
         </WrapperBar>
         <ListWrapper>
-          <ButtonWrapper>
-            <ButtonBackFoward onClick={previous} />
-          </ButtonWrapper>
           <PokemonList>
             {pokemons.map((item) => (
               <PokemonItem key={item.id} pokemon={item} />
             ))}
           </PokemonList>
-          <ButtonWrapper>
-            <ButtonFoward onClick={next} />
-          </ButtonWrapper>
         </ListWrapper>
+        <Sentinel ref={sentinel} />
       </IconContext.Provider>
     </Wrapper>
   )

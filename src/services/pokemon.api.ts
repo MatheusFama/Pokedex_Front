@@ -13,17 +13,14 @@ import {
   IEvolutionCard,
 } from '../models/Pokemons/IEvolution'
 
-const LIMIT_POKEMON = 20
-const LIMIT_ITEM = 40
-const LIMIT_ALL_NAMES = 1000000
-
-const http = axios.create({ baseURL: 'https://pokeapi.co/api/v2' })
+const http = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URI })
 
 class PokemonService {
   getAllPokemonNames(): Promise<ISearchData[]> {
+    console.log('URI', process.env.REACT_APP_API_BASE_URI)
     return http
       .get<IPaginacao<IPokemon>>('/pokemon', {
-        params: { offset: 0, limit: LIMIT_ALL_NAMES },
+        params: { offset: 0, limit: process.env.REACT_APP_LIMIT_ALL_NAMES },
       })
       .then((response) => {
         return response.data.results.map((item) => {
@@ -39,15 +36,19 @@ class PokemonService {
   getAllPokemons(offset: number): Promise<IPaginacao<IPokemon>> {
     return http
       .get<IPaginacao<IPokemon>>('/pokemon', {
-        params: { offset: offset, limit: LIMIT_POKEMON },
+        params: { offset: offset, limit: process.env.REACT_APP_LIMIT_POKEMON },
       })
       .then((response) => {
         const result: IPaginacao<IPokemon> = {
           count: response.data.count,
           next: response.data.next,
           previous: response.data.previous,
-          nextPage: response.data.next ? offset + LIMIT_POKEMON : 0,
-          previousPage: response.data.previous ? offset - LIMIT_POKEMON : 0,
+          nextPage: response.data.next
+            ? offset + Number(process.env.REACT_APP_LIMIT_POKEMON)
+            : 0,
+          previousPage: response.data.previous
+            ? offset - Number(process.env.REACT_APP_LIMIT_POKEMON)
+            : 0,
           results: response.data.results.map((item) => {
             return {
               id: Number(item.url.split('/').reverse()[1]),
@@ -144,7 +145,7 @@ class PokemonService {
   getAllItemNames(): Promise<ISearchData[]> {
     return http
       .get<IPaginacao<IItem>>('/item', {
-        params: { offset: 0, limit: LIMIT_ALL_NAMES },
+        params: { offset: 0, limit: process.env.REACT_APP_LIMIT_ALL_NAMES },
       })
       .then((response) => {
         return response.data.results.map((item) => {
@@ -160,15 +161,19 @@ class PokemonService {
   getAllItems(offset: number): Promise<IPaginacao<IItem>> {
     return http
       .get<IPaginacao<IItem>>('/item', {
-        params: { offset: offset, limit: LIMIT_ITEM },
+        params: { offset: offset, limit: process.env.REACT_APP_LIMIT_ITEM },
       })
       .then((response) => {
         const result: IPaginacao<IItem> = {
           count: response.data.count,
           next: response.data.next,
           previous: response.data.previous,
-          nextPage: response.data.next ? offset + LIMIT_ITEM : 0,
-          previousPage: response.data.previous ? offset - LIMIT_ITEM : 0,
+          nextPage: response.data.next
+            ? offset + Number(process.env.REACT_APP_LIMIT_ITEM)
+            : 0,
+          previousPage: response.data.previous
+            ? offset - Number(process.env.REACT_APP_LIMIT_ITEM)
+            : 0,
           results: response.data.results.map((item) => {
             return {
               id: Number(item.url.split('/').reverse()[1]),

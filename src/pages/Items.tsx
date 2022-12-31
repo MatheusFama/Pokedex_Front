@@ -59,17 +59,16 @@ const TitleWrapper = styled.div`
 `
 
 const Title = styled.img`
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 `
-
 
 const WrapperBar = styled.div`
   justify-content: center;
   display: flex;
   margin: 40px 0;
-  min-width: 300px ;
+  min-width: 300px;
   max-width: 30%;
   margin-left: auto;
   margin-right: auto;
