@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   background: #fff;
   background-image: url(${BackgroundImage});
-  padding: 40px;
+  padding: 40px 0;
 `
 
 const TitleWrapper = styled.div`
@@ -41,6 +41,13 @@ const WrapperBar = styled.div`
   margin-left: auto;
   margin-right: auto;
 `
+
+const ListWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+`
+
 const Sentinel = styled.div`
   min-height: 10px;
   background: transparent;
@@ -65,6 +72,7 @@ export const Items = () => {
     PokemonService.getAllItems(page)
       .then((response) => {
         setItems((previousItems) => [...previousItems,...response.results])
+        setHasNextPage(response.nextPage ? true : false)
       })
       .catch((erro) => {
         console.log(erro)
@@ -120,11 +128,13 @@ export const Items = () => {
         <WrapperBar>
           <SearchBar handleSearch={handleSearchSubmit} searchData={names} />
         </WrapperBar>
-        <ItemList>
-          {items.map((item) => (
-            <ItemItem key={item.id} item={item} />
-          ))}
-        </ItemList>
+        <ListWrapper>
+          <ItemList>
+            {items.map((item) => (
+              <ItemItem key={item.id} item={item} />
+            ))}
+          </ItemList>
+        </ListWrapper>
         <Sentinel ref={sentinel} />
       </IconContext.Provider>
     </Wrapper>
