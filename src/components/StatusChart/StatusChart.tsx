@@ -9,10 +9,19 @@ const Panel = styled.div`
   border-radius: 10px;
   width: 100%;
   padding-top: 1px;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  min-width: 340px;
+
 `
 
 const Table = styled.ul`
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  column-gap: 10px;
+  padding-left: 0;
   margin-bottom: 1.5em;
   position: relative;
   width: 100%;
@@ -31,6 +40,7 @@ const ColumnData = styled.ul`
   width: 100%;
   text-align: center;
   overflow: visible;
+  padding: 0;
 `
 
 const animation = keyframes`
@@ -63,6 +73,8 @@ const Data = styled.li<{ index: number; power: number }>`
 const ColumnName = styled.span`
   font-size: smaller;
   width: 12.95%;
+
+
 `
 
 const Title = styled.h3`

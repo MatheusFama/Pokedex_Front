@@ -18,7 +18,7 @@ import {
 import { EvolutionLevel } from '../components/EvolutionLevels/EvolutionLevel'
 import { StatusChart } from '../components/StatusChart/StatusChart'
 
-const PokemonImage = styled.section`
+const PokemonImage = styled.img`
   margin: 0;
   padding: 0;
   border: 0;
@@ -29,6 +29,15 @@ const PokemonImage = styled.section`
     padding: 0;
     border: 0;
   }
+  @media (max-width: 720px) {
+    max-width: 300px;
+  }
+`
+
+const PokemonImageWrapper = styled.div`
+  @media (max-width: 720px) {
+    text-align: center;
+  };
 `
 
 const Title = styled.h1`
@@ -39,6 +48,7 @@ const Wrapper = styled.div`
   background: #fff;
   background-image: url(${BackgroundImage});
   height: 100%;
+  width: 100%;
 `
 const Details = styled.div`
   display: flex;
@@ -46,6 +56,12 @@ const Details = styled.div`
   margin-left: 20%;
   margin-right: 20%;
   justify-content: space-evenly;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 `
 const Statistics = styled.div`
   border-radius: 3px;
@@ -59,7 +75,9 @@ const Data = styled.td``
 
 const Row = styled.tr``
 
-const Description = styled.div``
+const Description = styled.div`
+   min-width: 340px;
+`
 
 const Table = styled.table`
   padding-top: 10px;
@@ -67,6 +85,7 @@ const Table = styled.table`
   border-radius: 3px;
   text-align: center;
   width: 100%;
+  min-width: 340px;
 `
 
 const TypeAndWeakTypeList = styled.ul`
@@ -75,24 +94,36 @@ const TypeAndWeakTypeList = styled.ul`
   justify-content: start;
   text-align: center;
   margin: auto;
+
+  @media (max-width: 720px) {
+    flex-wrap: wrap;
+  }
 `
 
 const Abilities = styled.h6`
   font-weight: normal;
   margin: 0 0 5px 0;
 `
+
 const Evolutions = styled.div`
   color: white;
   background: #424242
     url(https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png);
   align-content: center;
   width: 100%;
-  min-width: 1000px;
+  min-width: 1300px;
+
+  @media (max-width: 720px) {
+  min-width: 450px;
+    
+  }
 `
 
 const PokemonImageStatus = styled.div`
   padding-right: 20%;
 `
+
+const FlavorText = styled.div``
 
 export const PokemonDetails = () => {
   const { id } = useParams()
@@ -211,25 +242,23 @@ export const PokemonDetails = () => {
       <Title>{pokemonDescription?.name}</Title>
       <Details>
         <PokemonImageStatus>
-          <PokemonImage>
-            <img
-              src={
+          <PokemonImageWrapper>
+
+          <PokemonImage src={
                 pokemonDescription?.sprites.other['official-artwork']
                   .front_default
               }
-              alt="Pokemon"
-            />
-          </PokemonImage>
+              alt="Pokemon"/>
           <StatusChart status={stats} />
+
+          </PokemonImageWrapper>
         </PokemonImageStatus>
         <Description>
-          <div>
-            <h4>
-              {pokemonSpecie?.flavor_text_entries
-                .filter((flavor) => flavor.language.name === 'en')[0]
-                .flavor_text.replace('\f', ' ')}
-            </h4>
-          </div>
+          <FlavorText>
+            {pokemonSpecie?.flavor_text_entries
+              .filter((flavor) => flavor.language.name === 'en')[0]
+              .flavor_text.replace('\f', ' ')}
+          </FlavorText>
           <Statistics>
             <Table>
               <tbody>
