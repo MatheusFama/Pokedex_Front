@@ -7,6 +7,7 @@ const Tree = styled.ul<{displayMode:string}>`
   list-style: none;
   display: flex;
   flex-direction: ${({displayMode}) => displayMode === 'horizontal'? 'row' : 'column'};
+  row-gap: 60px;
   @media (max-width: 720px) {
     row-gap: 60px;
   }

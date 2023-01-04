@@ -27,6 +27,10 @@ const Wrapper = styled.div`
   background: #fff;
   background-image: url(${BackgroundImage});
   margin: 10px;
+  width: 100%;
+  @media (max-width: 720px) {
+    max-width: 720px;
+  }
 `
 
 const TitleWrapper = styled.div`
@@ -46,27 +50,31 @@ const PokemonImage = styled.img`
   max-width: 350px;
 `
 
-const PokemonImageWrapper = styled.div`
+const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   @media (max-width: 720px) {
     text-align: center;
-  } ;
+  } 
+`
+
+const StatusChartWrapper = styled.div`
+  max-width: 400px;
 `
 
 const TableWrapper = styled.div`
   width: 450px;
   @media (max-width: 720px) {
     width: 340px;
-  } ;
+  } 
 `
 
 const Description = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  min-width: 340px;
+  width: 100%;
 `
 
 const TypeAndWeakTypeList = styled.ul`
@@ -80,7 +88,7 @@ const TypeAndWeakTypeList = styled.ul`
   }
 `
 
-const Abilities = styled.h6`
+const Abilities = styled.h5`
   font-weight: normal;
   margin: 0 0 5px 0;
 `
@@ -91,8 +99,6 @@ const Evolutions = styled.div`
     url(https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png);
   align-content: center;
   width: 100%;
-  min-width: 1300px;
-
   @media (max-width: 720px) {
     min-width: 410px;
   }
@@ -103,18 +109,19 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+
+  @media (max-width: 720px) {
+    width: 420px;
+  } 
 `
 
-const FlavorText = styled.section`
+const FlavorText = styled.section`  
 word-wrap: break-word;      
 max-width: 500px;
 width: 100%;
-@media (max-width : 720px) {
-  max-width: 420px;
-}
 
 `
-
 
 const DisplayMode = (levels : IEvolutionTreeLevel[]) => {
   
@@ -123,9 +130,9 @@ const DisplayMode = (levels : IEvolutionTreeLevel[]) => {
 
   //mobile
   if(window.screen.width <= 720)
-    return maxLevelLength >= 4? 'horizontal' : 'vertical'
+    return maxLevelLength >= 3? 'horizontal' : 'vertical'
   else
-    return maxLevelLength >= 4? 'vertical' : 'horizontal'
+    return maxLevelLength >= 3? 'vertical' : 'horizontal'
 
 }
 
@@ -273,7 +280,7 @@ export const PokemonDetails = () => {
       </TitleWrapper>
       <Details>
         <Container>
-          <PokemonImageWrapper>
+          <ImageWrapper>
             <PokemonImage
               src={
                 pokemonDescription?.sprites.other['official-artwork']
@@ -281,8 +288,10 @@ export const PokemonDetails = () => {
               }
               alt="Pokemon"
             />
-          </PokemonImageWrapper>
-          <StatusChart status={stats} />
+          </ImageWrapper>
+          <StatusChartWrapper>
+            <StatusChart status={stats} />
+          </StatusChartWrapper>
         </Container>
         <Description>
           <Subtitle value="Description" />
