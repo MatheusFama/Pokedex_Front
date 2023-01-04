@@ -107,10 +107,10 @@ const Container = styled.div`
 
 const FlavorText = styled.section`
 word-wrap: break-word;      
-width: 500px;
-
+max-width: 500px;
+width: 100%;
 @media (max-width : 720px) {
-  width: 441px;
+  max-width: 420px;
 }
 
 `
