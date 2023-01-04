@@ -70,11 +70,20 @@ const TableWrapper = styled.div`
   } 
 `
 
+const TypeWrapper = styled.div`
+align-items: flex-start;
+`
+
+
 const Description = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   width: 100%;
+
+  @media (max-width: 720px) {
+    padding-left: 10px;
+  } 
 `
 
 const TypeAndWeakTypeList = styled.ul`
@@ -303,7 +312,7 @@ export const PokemonDetails = () => {
           <TableWrapper>
             <PokemonTableInfo columns={Columns(pokemonDescription)} />
           </TableWrapper>
-          <div>
+          <TypeWrapper>
             <Subtitle value="Types" />
             <TypeAndWeakTypeList>
               {pokemonDescription?.types.map((item, index) => (
@@ -321,7 +330,7 @@ export const PokemonDetails = () => {
                 ))}
               </TypeAndWeakTypeList>
             ))}
-          </div>
+          </TypeWrapper>
         </Description>
       </Details>
       <Evolutions>
