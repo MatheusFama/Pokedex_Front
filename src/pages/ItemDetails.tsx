@@ -4,45 +4,69 @@ import styled from 'styled-components'
 import { IItemCard } from '../models/Items/IItemCard'
 import PokemonService from '../services/pokemon.api'
 import BackgroundImage from '../assets/container_bg.png'
+import { Subtitle, Title } from '../GlobalStyles'
 
 const Wrapper = styled.div`
   background: #fff;
   background-image: url(${BackgroundImage});
   height: 100%;
+  width: 100%;
 `
+
+const TitleWrapper = styled.div`
+  text-align: center;
+  padding: 40px;
+`
+
 const Details = styled.div`
   display: flex;
-  flex-wrap: unset;
   justify-content: space-evenly;
-  margin-left: 20px;
+  column-gap: 30px;
+
+  @media (max-width:720px) {
+    flex-direction: column;
+  }
 `
 
-const Title = styled.h1`
-  text-align: center;
-  margin-bottom: 40px;
-`
 
-const ItemImage = styled.section`
+const ItemImage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items:center;
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  flex-basis: 100%;
   font: inherit;
+  width: 100%;
   img {
     padding: 0;
     border: 0;
     min-height: 130px;
     min-width: 130px;
   }
+  @media (max-width:720px) {
+    align-items: flex-start;
+  }
+
 `
 
-const Text = styled.span`
+const Text = styled.section`
   color: #737373;
+  max-width: 500px;
 `
 
-const Attributes = styled.li`
-  list-style: none;
+const DescriptionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 10px 10px;
+`
+
+const Attributes = styled.ul`
+ padding-left: 40px;
+ li{
+    margin: 5px;
+ }
 `
 
 const Image = styled.img`
@@ -50,8 +74,9 @@ const Image = styled.img`
   margin-right: auto;
   margin-left: auto;
 `
-const EffectsAttributes = styled.div`
-  flex-basis: 100%;
+const EffectsAttributesWrapper = styled.div`
+  width: 100%;
+
 `
 
 export const ItemDetails = () => {
@@ -66,37 +91,43 @@ export const ItemDetails = () => {
 
   return (
     <Wrapper>
-      <Title>{itemDescription?.name}</Title>
+      <TitleWrapper>
+        <Title value={itemDescription?.name}/>
+      </TitleWrapper>
       <Details>
         <ItemImage>
           <Image src={itemDescription?.sprites.default} alt="Item" />
-          <h2>Description</h2>
-          <Text>
-            {
-              itemDescription?.flavor_text_entries.find(
-                (d) => d.language.name === 'en'
-              )?.text
-            }
-          </Text>
+          <DescriptionWrapper>
+            <Subtitle value='Description'/>
+            <Text>
+              {
+                itemDescription?.flavor_text_entries.find(
+                  (d) => d.language.name === 'en'
+                )?.text
+              }
+            </Text>
+          </DescriptionWrapper>
         </ItemImage>
-        <EffectsAttributes>
-          <h2>Effects</h2>
-          <Text>
-            {
-              itemDescription?.effect_entries.find(
-                (d) => d.language.name === 'en'
-              )?.effect
-            }
-          </Text>
-          <h2>Attributes</h2>
-          <Attributes>
-            {itemDescription?.attributes.map((item, index) => (
-              <ul key={index}>
-                <Text key={index}>{item.name}</Text>
-              </ul>
-            ))}
-          </Attributes>
-        </EffectsAttributes>
+        <EffectsAttributesWrapper>
+          <DescriptionWrapper>
+            <Subtitle value='Effects'/>
+            <Text>
+              {
+                itemDescription?.effect_entries.find(
+                  (d) => d.language.name === 'en'
+                )?.effect
+              }
+            </Text>
+            <Subtitle value='Attributes'/>
+            <Attributes>
+              {itemDescription?.attributes.map((item, index) => (
+                <li key={index}>
+                  <Text key={index}>{item.name}</Text>
+                </li>
+              ))}
+            </Attributes>
+          </DescriptionWrapper>
+        </EffectsAttributesWrapper>
       </Details>
     </Wrapper>
   )

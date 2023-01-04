@@ -8,9 +8,13 @@ const Wrapper = styled.div`
 `
 
 const List = styled.ul`
+  align-items: center;
+  column-gap: 5px;
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
+  justify-content: center;
+  row-gap: 5px;
 `
 
 export const ItemList = (props: Props) => {

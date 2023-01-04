@@ -7,10 +7,12 @@ import { IItemCard } from '../../models/Items/IItemCard'
 import PokemonService from '../../services/pokemon.api'
 
 const Wrapper = styled.section`
+  align-items: center;
   background-color: rgb(231, 231, 231);
   border-radius: 10%;
-  margin-right: 15px;
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
   width: 241px;
   height: 200px;
