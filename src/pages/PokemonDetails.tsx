@@ -66,7 +66,7 @@ const StatusChartWrapper = styled.div`
 const TableWrapper = styled.div`
   width: 450px;
   @media (max-width: 720px) {
-    width: 340px;
+    max-width: 340px;
   } 
 `
 

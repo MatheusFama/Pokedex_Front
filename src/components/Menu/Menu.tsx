@@ -8,6 +8,11 @@ import { MenuItem } from './MenuItem'
 import { SubMenu } from './SubMenu'
 import MenuImage from '../../assets/menuImage.png'
 
+const Wrapper = styled.div`
+  min-width: 410px;
+  width: 100%;
+`
+
 const Nav = styled.div`
   background: #15171c;
   height: 80px;
@@ -39,6 +44,7 @@ const SidebarNav = styled('nav')<{ sidebar: boolean }>`
 `
 const SidebarWrap = styled.div`
   width: 100%;
+  
 `
 
 const MenuTitle = styled.img`
@@ -55,7 +61,7 @@ export const Menu = ({ children }: MenuProps) => {
   const showSidebar = () => setSidebar(!sidebar)
 
   return (
-    <>
+    <Wrapper>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
           <NavIcon to="#">
@@ -80,6 +86,6 @@ export const Menu = ({ children }: MenuProps) => {
         </SidebarNav>
         {children}
       </IconContext.Provider>
-    </>
+    </Wrapper>
   )
 }
