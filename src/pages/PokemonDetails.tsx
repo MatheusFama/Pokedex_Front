@@ -17,74 +17,55 @@ import {
 } from '../models/Pokemons/IEvolution'
 import { EvolutionLevel } from '../components/EvolutionLevels/EvolutionLevel'
 import { StatusChart } from '../components/StatusChart/StatusChart'
+import {
+  PokemonTableColumn,
+  PokemonTableInfo,
+} from '../components/PokemonTableInfo/PokemonTableInfo'
+import { Subtitle, Title } from '../GlobalStyles'
 
-const PokemonImage = styled.img`
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  img {
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
-  @media (max-width: 720px) {
-    max-width: 300px;
-  }
-`
-
-const PokemonImageWrapper = styled.div`
-  @media (max-width: 720px) {
-    text-align: center;
-  };
-`
-
-const Title = styled.h1`
-  text-align: center;
-  margin-bottom: 40px;
-`
 const Wrapper = styled.div`
   background: #fff;
   background-image: url(${BackgroundImage});
-  height: 100%;
-  width: 100%;
+  margin: 10px;
 `
+
+const TitleWrapper = styled.div`
+  text-align: center;
+`
+
 const Details = styled.div`
   display: flex;
-  flex-wrap: unset;
-  margin-left: 20%;
-  margin-right: 20%;
   justify-content: space-evenly;
-
+  margin: 40px 0;
   @media (max-width: 720px) {
     flex-direction: column;
-    margin-left: 5%;
-    margin-right: 5%;
   }
 `
-const Statistics = styled.div`
-  border-radius: 3px;
-  padding-right: 10%;
-`
-const Column = styled.th`
-  color: white;
-  font-weight: normal;
-`
-const Data = styled.td``
 
-const Row = styled.tr``
+const PokemonImage = styled.img`
+  max-width: 350px;
+`
+
+const PokemonImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 720px) {
+    text-align: center;
+  } ;
+`
+
+const TableWrapper = styled.div`
+  width: 450px;
+  @media (max-width: 720px) {
+    width: 340px;
+  } ;
+`
 
 const Description = styled.div`
-   min-width: 340px;
-`
-
-const Table = styled.table`
-  padding-top: 10px;
-  background: #30a7d7;
-  border-radius: 3px;
-  text-align: center;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
   min-width: 340px;
 `
 
@@ -93,7 +74,6 @@ const TypeAndWeakTypeList = styled.ul`
   display: flex;
   justify-content: start;
   text-align: center;
-  margin: auto;
 
   @media (max-width: 720px) {
     flex-wrap: wrap;
@@ -114,16 +94,40 @@ const Evolutions = styled.div`
   min-width: 1300px;
 
   @media (max-width: 720px) {
-  min-width: 450px;
-    
+    min-width: 410px;
   }
 `
 
-const PokemonImageStatus = styled.div`
-  padding-right: 20%;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
 
-const FlavorText = styled.div``
+const FlavorText = styled.section`
+word-wrap: break-word;      
+width: 500px;
+
+@media (max-width : 720px) {
+  width: 441px;
+}
+
+`
+
+
+const DisplayMode = (levels : IEvolutionTreeLevel[]) => {
+  
+  const treeLevelsLength = levels.length > 0 ? levels.map(l => l.items.length) : [1]
+  const maxLevelLength = Math.max(...treeLevelsLength)
+
+  //mobile
+  if(window.screen.width <= 720)
+    return maxLevelLength >= 4? 'horizontal' : 'vertical'
+  else
+    return maxLevelLength >= 4? 'vertical' : 'horizontal'
+
+}
 
 export const PokemonDetails = () => {
   const { id } = useParams()
@@ -237,71 +241,86 @@ export const PokemonDetails = () => {
     if (tree) iniTreeLevels(tree[0])
   }, [tree])
 
-  return (
-    <Wrapper>
-      <Title>{pokemonDescription?.name}</Title>
-      <Details>
-        <PokemonImageStatus>
-          <PokemonImageWrapper>
+  //Pokemon table Info columns
+  const Columns = (
+    pokemonDescription: IPokemonDescription | undefined
+  ): PokemonTableColumn[] => {
+    const height: PokemonTableColumn = {
+      title: 'Height',
+      data: `${pokemonDescription?.height} m`,
+    }
 
-          <PokemonImage src={
+    const weight: PokemonTableColumn = {
+      title: 'Weight',
+      data: `${pokemonDescription?.weight} kg`,
+    }
+
+    const abilities: PokemonTableColumn = {
+      title: 'Abilities',
+      data: pokemonDescription?.abilities.map((item, index) => (
+        <Abilities key={index}>{item.ability.name}</Abilities>
+      )),
+    }
+
+    return [height, weight, abilities]
+  }
+
+  return (
+    <>
+    <Wrapper>
+      <TitleWrapper>
+        <Title value={pokemonDescription?.name} />
+      </TitleWrapper>
+      <Details>
+        <Container>
+          <PokemonImageWrapper>
+            <PokemonImage
+              src={
                 pokemonDescription?.sprites.other['official-artwork']
                   .front_default
               }
-              alt="Pokemon"/>
-          <StatusChart status={stats} />
-
+              alt="Pokemon"
+            />
           </PokemonImageWrapper>
-        </PokemonImageStatus>
+          <StatusChart status={stats} />
+        </Container>
         <Description>
+          <Subtitle value="Description" />
           <FlavorText>
             {pokemonSpecie?.flavor_text_entries
               .filter((flavor) => flavor.language.name === 'en')[0]
               .flavor_text.replace('\f', ' ')}
           </FlavorText>
-          <Statistics>
-            <Table>
-              <tbody>
-                <Row>
-                  <Column>Height</Column>
-                  <Column>Weight</Column>
-                  <Column>Abilities</Column>
-                </Row>
-                <Row>
-                  <Data>{pokemonDescription?.height} m</Data>
-                  <Data>{pokemonDescription?.weight} kg</Data>
-                  <Data>
-                    {pokemonDescription?.abilities.map((item, index) => (
-                      <Abilities key={index}>{item.ability.name}</Abilities>
-                    ))}
-                  </Data>
-                </Row>
-              </tbody>
-            </Table>
-          </Statistics>
-          <h2>Types</h2>
-          <TypeAndWeakTypeList>
-            {pokemonDescription?.types.map((item, index) => (
-              <TypeItem key={index + item.type.name + 'type'} type={item} />
-            ))}
-          </TypeAndWeakTypeList>
-          <h2>Weak Against</h2>
-          {weakTypes?.map((item, index) => (
-            <TypeAndWeakTypeList key={index}>
-              {item?.damage_relations.double_damage_from.map((type) => (
-                <TypeItem
-                  key={index + type.name + 'damage_relations'}
-                  type={{ slot: 0, type: type }}
-                />
+          <TableWrapper>
+            <PokemonTableInfo columns={Columns(pokemonDescription)} />
+          </TableWrapper>
+          <div>
+            <Subtitle value="Types" />
+            <TypeAndWeakTypeList>
+              {pokemonDescription?.types.map((item, index) => (
+                <TypeItem key={index + item.type.name + 'type'} type={item} />
               ))}
             </TypeAndWeakTypeList>
-          ))}
+            <Subtitle value="Weak Against" />
+            {weakTypes?.map((item, index) => (
+              <TypeAndWeakTypeList key={index}>
+                {item?.damage_relations.double_damage_from.map((type) => (
+                  <TypeItem
+                    key={index + type.name + 'damage_relations'}
+                    type={{ slot: 0, type: type }}
+                  />
+                ))}
+              </TypeAndWeakTypeList>
+            ))}
+          </div>
         </Description>
       </Details>
       <Evolutions>
-        <h2>Evolutions</h2>
-        <EvolutionLevel levels={treeLevels ?? []} />
+        <Subtitle value='Evolutions'/>
+        <EvolutionLevel levels={treeLevels ?? []} displayMode={DisplayMode(treeLevels??[])}/>
       </Evolutions>
     </Wrapper>
+    </>
+
   )
 }

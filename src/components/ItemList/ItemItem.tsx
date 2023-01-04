@@ -1,31 +1,27 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { CardTitle } from '../../GlobalStyles'
 import { IItem } from '../../models/Items/IItem'
 import { IItemCard } from '../../models/Items/IItemCard'
 import PokemonService from '../../services/pokemon.api'
 
 const Wrapper = styled.section`
   background-color: rgb(231, 231, 231);
-  position: relative;
+  border-radius: 10%;
   margin-right: 15px;
   margin-bottom: 15px;
-  border-radius: 10%;
+  position: relative;
   width: 241px;
   height: 200px;
 `
 
 const Item = styled.li`
   input {
-    min-width: 130px;
     max-width: 130px;
-    min-height: 130px;
     max-height: 130px;
-  }
-
-  h3 {
-    font-weight: normal;
-    text-align: center;
+    min-width: 130px;
+    min-height: 130px;
   }
 `
 
@@ -50,7 +46,7 @@ export const ItemItem = ({ item }: { item: IItem }) => {
   return (
     <Wrapper>
       <Item>
-        <h3>{item.name}</h3>
+        <CardTitle value={item.name} />
         <input
           type="image"
           src={itemCard?.sprites.default}

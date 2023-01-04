@@ -64,14 +64,12 @@ export const Items = () => {
     useState<boolean>(true)
   const sentinel = useRef<HTMLDivElement | null>(null)
 
-
   const setItem = (page: number) => {
-
     if (actualPage < 0) return
 
     PokemonService.getAllItems(page)
       .then((response) => {
-        setItems((previousItems) => [...previousItems,...response.results])
+        setItems((previousItems) => [...previousItems, ...response.results])
         setHasNextPage(response.nextPage ? true : false)
       })
       .catch((erro) => {
@@ -86,7 +84,6 @@ export const Items = () => {
       .catch((error) => console.log(error))
   }, [actualPage])
 
-
   //Observer
   useEffect(() => {
     const intersectObserver = new IntersectionObserver((elements) => {
@@ -99,7 +96,6 @@ export const Items = () => {
 
     return () => intersectObserver.disconnect()
   }, [hasNextPage, enableInfiniteScroll])
-
 
   const handleSearchSubmit = (searchValue: string) => {
     if (searchValue === '') {

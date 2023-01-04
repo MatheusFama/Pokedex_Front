@@ -17,7 +17,6 @@ const http = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URI })
 
 class PokemonService {
   getAllPokemonNames(): Promise<ISearchData[]> {
-    console.log('URI', process.env.REACT_APP_API_BASE_URI)
     return http
       .get<IPaginacao<IPokemon>>('/pokemon', {
         params: { offset: 0, limit: process.env.REACT_APP_LIMIT_ALL_NAMES },

@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { IEvolutionCard } from '../../models/Pokemons/IEvolution'
-import { EvolutionNode } from './EvolutionNodes'
 
 const Tree = styled.ul`
   display: inline-block;

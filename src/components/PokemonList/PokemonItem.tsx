@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { CardTitle } from '../../GlobalStyles'
 import { IPokemon } from '../../models/Pokemons/IPokemon'
 import { IPokemonCard } from '../../models/Pokemons/IPokemonCard'
 import PokemonService from '../../services/pokemon.api'
@@ -8,13 +9,15 @@ import { TypeItem } from './TypeList/TypeItem'
 import { TypeList } from './TypeList/TypeList'
 
 const Wrapper = styled.section`
-  position: relative;
+  align-items: center;
   background-color: rgb(231, 231, 231);
-  margin-right: 15px;
-  margin-bottom: 15px;
   border-radius: 10%;
+  display: flex;
   height: 300px;
+  position: relative;
+  justify-content: center;
   width: 290px;
+
   &:hover {
     transform: matrix(1, 0, 0, 1, 0, -3);
     transition: 0.5s;
@@ -23,29 +26,30 @@ const Wrapper = styled.section`
 
 const Item = styled.li`
   border: none;
+  display: inline-block;
   outline: none;
   position: relative;
-  display: inline-block;
 `
 
 const Image = styled.button`
   background-color: inherit;
   border: none;
   outline: none;
+
   img {
     width: 60%;
     height: 60%;
     cursor: pointer;
   }
 `
+
 const PokemonNumber = styled.p`
-  position: relative;
-  font-weight: bold;
-  margin-left: 40px;
-  margin-top: 5px;
-  margin-bottom: 0;
-  text-align: left;
   color: #616161;
+  font-weight: bold;
+  margin-left: 15%;
+  margin-bottom: 0;
+  position: relative;
+  text-align: left;
 `
 
 export const PokemonItem = ({ pokemon }: { pokemon: IPokemon }) => {
@@ -68,8 +72,7 @@ export const PokemonItem = ({ pokemon }: { pokemon: IPokemon }) => {
   return (
     <Wrapper>
       <Item>
-        <h3>{pokemon.name}</h3>
-
+        <CardTitle value={pokemon.name} />
         <Image type="submit" onClick={() => onClick(pokemon.id)}>
           <img
             src={pokemonCard?.sprites.other['official-artwork'].front_default}

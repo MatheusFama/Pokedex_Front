@@ -2,11 +2,13 @@ import styled from 'styled-components'
 import { IEvolutionTreeLevel } from '../../models/Pokemons/IEvolution'
 import { EvolutionTreeItems } from './EvoltionTreeItems'
 
-const Tree = styled.ul`
+const Tree = styled.ul<{displayMode:string}>`
+  
   list-style: none;
   display: flex;
+  flex-direction: ${({displayMode}) => displayMode === 'horizontal'? 'row' : 'column'};
   @media (max-width: 720px) {
-    display: grid;
+    row-gap: 60px;
   }
 `
 const Item = styled.li`
@@ -14,23 +16,23 @@ const Item = styled.li`
   display: flex;
   align-items: center;
   position: relative;
-
 `
 
 export const EvolutionLevel = ({
   levels,
+  displayMode
 }: {
-  levels: IEvolutionTreeLevel[]
+  levels: IEvolutionTreeLevel[],
+  displayMode: string
 }) => {
   return (
-    <Tree>
+    <Tree displayMode={displayMode}>
       {levels
         .filter((a) => a.items.length > 0)
         .map((item, index) => (
           <Item key={index}>
-            <EvolutionTreeItems
+            <EvolutionTreeItems  displayMode={displayMode==='horizontal'? 'vertical' : 'horizontal'}
               items={item.items}
-              isLastLevel={item.level === 1}
             />
           </Item>
         ))}

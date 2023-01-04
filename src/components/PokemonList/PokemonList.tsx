@@ -8,11 +8,13 @@ const Wrapper = styled.div`
   display: contents;
 `
 const List = styled.ul`
+  align-items: center;
+  column-gap: 15px;
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  align-items: center;
   justify-content: center;
+  row-gap: 15px;
 `
 
 export const PokemonList = (props: Props) => {

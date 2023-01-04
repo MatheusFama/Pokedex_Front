@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import { CardTitle } from '../../GlobalStyles'
 import { Status } from '../../models/Pokemons/IPokemonDescription'
 
 const COLUMN_HEIGHT = 15
@@ -11,16 +12,14 @@ const Panel = styled.div`
   padding-top: 1px;
   padding-left: 30px;
   padding-right: 30px;
-
-  min-width: 340px;
-
+  min-width: 400px;
 `
 
 const Table = styled.ul`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  column-gap: 10px;
+  justify-content: space-around;
+  column-gap: 7px;
   padding-left: 0;
   margin-bottom: 1.5em;
   position: relative;
@@ -29,9 +28,8 @@ const Table = styled.ul`
 `
 
 const Column = styled.li`
-  width: 12.95%;
+  width: 100%;
   display: inline-block;
-  padding-right: 1%;
 `
 
 const ColumnData = styled.ul`
@@ -48,12 +46,12 @@ const animation = keyframes`
   to {background-color: #30a7d7;}
 `
 const Data = styled.li<{ index: number; power: number }>`
+  align-items: center;
+  animation: ${({ index, power }) => (index <= power ? animation : '')} ${({ index }) => index > MIN_ANIMATION_TIME ? `${MIN_ANIMATION_TIME}s` : `${index}s`};
   background: ${({ index, power }) => (index <= power ? '#30a7d7' : 'white')};
   min-width: 1ch;
   min-height: 1ch;
   margin-bottom: 10px;
-  align-items: center;
-  animation: ${({ index, power }) => (index <= power ? animation : '')} ${({ index }) => index > MIN_ANIMATION_TIME ? `${MIN_ANIMATION_TIME}s` : `${index}s`};
 
   ::before {
     background: blue;
@@ -64,6 +62,7 @@ const Data = styled.li<{ index: number; power: number }>`
     position: absolute;
     pointer-events: none;
   }
+  
   &:hover::before {
     content: '${({ power }) => power * 10}';
     float: left;
@@ -73,18 +72,22 @@ const Data = styled.li<{ index: number; power: number }>`
 const ColumnName = styled.span`
   font-size: smaller;
   width: 12.95%;
-
-
 `
+const Title = styled(CardTitle)``
 
-const Title = styled.h3`
+const TitleWrap = styled.div`
+  margin: 10px 0;
   text-align: center;
+  ${Title}
 `
 
 export const StatusChart = ({ status }: { status: Status[] }) => {
   return (
     <Panel>
-      <Title>Stats</Title>
+      <TitleWrap>
+        <Title value='Stats'/>
+      </TitleWrap>
+      
       <Table>
         <Column>
           <ColumnData key={'hp'}>
